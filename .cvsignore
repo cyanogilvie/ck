@@ -1,0 +1,6 @@
+autom4te.cache
+Makefile
+pkgIndex.tcl
+*.dll
+*.so
+config.status

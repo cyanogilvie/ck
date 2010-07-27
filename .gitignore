@@ -1,0 +1,10 @@
+*.swp
+*.o
+*.so
+configure
+Makefile
+config.log
+config.status
+autom4te.cache
+core
+CVS
