@@ -695,21 +695,6 @@ Ck_CreateMainWindow(interp, className)
      * Set variables for the intepreter.
      */
 
-#if (TCL_MAJOR_VERSION < 8)
-    if (Tcl_GetVar(interp, "ck_library", TCL_GLOBAL_ONLY) == NULL) {
-        /*
-         * A library directory hasn't already been set, so figure out
-         * which one to use.
-         */
-
-	char *libDir = getenv("CK_LIBRARY");
-
-        if (libDir == NULL) {
-            libDir = CK_LIBRARY;
-        }
-        Tcl_SetVar(interp, "ck_library", libDir, TCL_GLOBAL_ONLY);
-    }
-#endif
     Tcl_SetVar(interp, "ck_version", CK_VERSION, TCL_GLOBAL_ONLY);
 
     /*
@@ -749,43 +734,9 @@ Ck_Init(interp)
     CkWindow *mainWindow;
     char *p, *name, *class;
     int code;
-    static char initCmd[] =
-#if (TCL_MAJOR_VERSION >= 8)
-"proc init {} {\n\
-    global ck_library ck_version\n\
-    rename init {}\n\
-    tcl_findLibrary ck $ck_version 0 ck.tcl CK_LIBRARY ck_library\n\
-}\n\
-init";
-#else
-"proc init {} {\n\
-    global ck_library ck_version env\n\
-    rename init {}\n\
-    set dirs {}\n\
-    if [info exists env(CK_LIBRARY)] {\n\
-        lappend dirs $env(CK_LIBRARY)\n\
-    }\n\
-    lappend dirs $ck_library\n\
-    lappend dirs [file dirname [info library]]/lib/ck$ck_version\n\
-    catch {lappend dirs [file dirname [file dirname \\\n\
-        [info nameofexecutable]]]/lib/ck$ck_version}\n\
-    set lib ck$ck_version\n\
-    lappend dirs [file dirname [file dirname [pwd]]]/$lib/library\n\
-    lappend dirs [file dirname [file dirname [info library]]]/$lib/library\n\
-    lappend dirs [file dirname [pwd]]/library\n\
-    foreach i $dirs {\n\
-        set ck_library $i\n\
-        if ![catch {uplevel #0 source $i/ck.tcl}] {\n\
-            return\n\
-        }\n\
-    }\n\
-    set msg \"Can't find a usable ck.tcl in the following directories: \n\"\n\
-    append msg \"    $dirs\n\"\n\
-    append msg \"This probably means that Ck wasn't installed properly.\n\"\n\
-    error $msg\n\
-}\n\
-init";
-#endif
+
+    if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL)
+        return TCL_ERROR;
 
     p = Tcl_GetVar(interp, "argv0", TCL_GLOBAL_ONLY);
     if (p == NULL || *p == '\0')
@@ -801,14 +752,10 @@ init";
     mainWindow = Ck_CreateMainWindow(interp, class);
     ckfree(class);
 
-#if !((TCL_MAJOR_VERSION == 7) && (TCL_MINOR_VERSION <= 4))
-    if (Tcl_PkgRequire(interp, "Tcl", TCL_VERSION, 0) == NULL)
+    if (Tcl_PkgProvide(interp, "ck", PACKAGE_VERSION) != TCL_OK)
         return TCL_ERROR;
-    code = Tcl_PkgProvide(interp, "Ck", CK_VERSION);
-    if (code != TCL_OK)
-        return TCL_ERROR;
-#endif
-    return Tcl_Eval(interp, initCmd);
+
+    return TCL_OK;
 }
 
 /*

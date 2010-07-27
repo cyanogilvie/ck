@@ -480,7 +480,7 @@ Ck_CursesCmd(clientData, interp, argc, argv)
 	}
 	return TCL_OK;
 #else
-	interp->result = "screen dump not supported by this curses";
+	Tcl_SetObjResult(interp, Tcl_NewStringObj("screen dump not supported by this curses", -1));
 	return TCL_ERROR;
 #endif
     } else if ((c == 's') && (strncmp(argv[1], "suspend", length) == 0)) {
@@ -868,7 +868,8 @@ Ck_BindtagsCmd(clientData, interp, argc, argv)
     CkWindow *mainWin = (CkWindow *) clientData;
     CkWindow *winPtr, *winPtr2;
     int i, tagArgc;
-    char *p, **tagArgv;
+    const char *p;
+    const char **tagArgv;
 
     if ((argc < 2) || (argc > 3)) {
 	Tcl_AppendResult(interp, "wrong # args: should be \"", argv[0],

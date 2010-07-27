@@ -1,0 +1,25 @@
+# vim: ft=tcl foldmethod=marker foldmarker=<<<,>>> ts=4 shiftwidth=4
+
+if {"::tcltest" ni [namespace children]} {
+    package require tcltest
+    namespace import ::tcltest::*
+}
+
+puts stderr foo
+try {
+	package require ck
+} on error {errmsg options} {
+	puts stderr "Error loading ck: [dict get $options -errorinfo]"
+}
+puts stderr bar
+
+test ck-1.1 {Load ck} -body { #<<<
+} -result {}
+
+#>>>
+puts stderr baz
+
+
+# cleanup
+::tcltest::cleanupTests
+return

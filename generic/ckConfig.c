@@ -530,7 +530,7 @@ Ck_ConfigureInfo(interp, winPtr, specs, widgRec, argvName, flags)
 	    char*	tmp;
 	    tmp = FormatConfigInfo(interp, winPtr, specPtr, widgRec);
 	    Tcl_SetObjResult(interp, Tcl_NewStringObj(tmp, -1));
-	    free(tmp);
+	    //free(tmp);
 	}
 	return TCL_OK;
     }
@@ -608,7 +608,7 @@ Ck_ConfigureValue(interp, winPtr, specs, widgRec, argvName, flags)
 	Tcl_FreeProc*	f;
 	tmp = FormatConfigValue(interp, winPtr, specPtr, widgRec, tmp, &f);
 	Tcl_SetObjResult(interp, Tcl_NewStringObj(tmp, -1));
-	free(tmp);
+	//free(tmp);
     }
     return TCL_OK;
 }

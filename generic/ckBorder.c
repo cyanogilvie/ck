@@ -33,7 +33,7 @@ static int initialized = 0;               /* gCharTable initialized. */
 int
 Ck_GetGChar(interp, name, gchar)
     Tcl_Interp *interp;
-    char *name;
+    const char *name;
     int *gchar;
 {
     Tcl_HashEntry *hPtr;
@@ -153,7 +153,7 @@ Ck_GetBorder(interp, string)
     char *string;
 {
     int i, largc, bchar[8];
-    char **largv;
+    const char **largv;
     CkBorder *borderPtr;
 
     if (Tcl_SplitList(interp, string, &largc, &largv) != TCL_OK)

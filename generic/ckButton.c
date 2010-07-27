@@ -290,7 +290,7 @@ static char *		ButtonVarProc _ANSI_ARGS_((ClientData clientData,
 			    Tcl_Interp *interp, char *name1, char *name2,
 			    int flags));
 static int		ButtonWidgetCmd _ANSI_ARGS_((ClientData clientData,
-			    Tcl_Interp *interp, int argc, char **argv));
+			    Tcl_Interp *interp, int argc, const char **argv));
 static void		ComputeButtonGeometry _ANSI_ARGS_((Button *butPtr));
 static int		ConfigureButton _ANSI_ARGS_((Tcl_Interp *interp,
 			    Button *butPtr, int argc, char **argv,
@@ -439,7 +439,7 @@ ButtonWidgetCmd(clientData, interp, argc, argv)
     ClientData clientData;	/* Information about button widget. */
     Tcl_Interp *interp;		/* Current interpreter. */
     int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    const char **argv;		/* Argument strings. */
 {
     Button *butPtr = (Button *) clientData;
     int result = TCL_OK;

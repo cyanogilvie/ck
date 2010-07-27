@@ -82,7 +82,7 @@ static struct {
 
 Ck_Uid
 Ck_GetUid(string)
-    char *string;		/* String to convert. */
+    const char *string;		/* String to convert. */
 {
     int dummy;
 
@@ -185,7 +185,7 @@ Ck_GetAttr(interp, name, attrPtr)
     int *attrPtr;
 {
     int i, k, len, largc;
-    char **largv;
+    const char **largv;
 
     if (Tcl_SplitList(interp, name, &largc, &largv) != TCL_OK)
 	return TCL_ERROR;

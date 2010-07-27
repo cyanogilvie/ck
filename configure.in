@@ -71,10 +71,10 @@ TEA_SETUP_COMPILER
 # and PKG_TCL_SOURCES.
 #-----------------------------------------------------------------------
 
-TEA_ADD_SOURCES([ckAppInit.c ckBind.c ckBorder.c ckButton.c ckCmds.c ckConfig.c ckEntry.c ckEvent.c ckFocus.c ckFrame.c ckGeometry.c ckGet.c ckGrid.c ckListbox.c ckMain.c ckMenubutton.c ckMenu.c ckMessage.c ckOption.c ckPack.c ckPlace.c ckPreserve.c ckRecorder.c ckScrollbar.c ckTextBTree.c ckText.c ckTextDisp.c ckTextIndex.c ckTextMark.c ckTextTag.c ckTree.c ckUtil.c ckWindow.c tkEvent.c winMain.c])
+TEA_ADD_SOURCES([ckBind.c ckBorder.c ckButton.c ckCmds.c ckConfig.c ckEntry.c ckEvent.c ckFocus.c ckFrame.c ckGeometry.c ckGet.c ckGrid.c ckListbox.c ckMenubutton.c ckMenu.c ckMessage.c ckOption.c ckPack.c ckPlace.c ckPreserve.c ckRecorder.c ckScrollbar.c ckTextBTree.c ckText.c ckTextDisp.c ckTextIndex.c ckTextMark.c ckTextTag.c ckTree.c ckUtil.c ckWindow.c tkEvent.c])
 TEA_ADD_HEADERS([])
 TEA_ADD_INCLUDES([])
-TEA_ADD_LIBS([-lncurses])
+TEA_ADD_LIBS([-lncursesw])
 TEA_ADD_CFLAGS([])
 TEA_ADD_STUB_SOURCES([])
 TEA_ADD_TCL_SOURCES([])
@@ -183,5 +183,11 @@ TEA_PROG_TCLSH
 # You may alternatively have a special pkgIndex.tcl.in or other files
 # which require substituting th AC variables in.  Include these here.
 #--------------------------------------------------------------------
+
+
+AC_TRY_LINK([#include <ncurses.h>],
+	    [int c; initscr(); scr_dump("xx");],
+	    [AC_MSG_RESULT(yes)
+	    AC_DEFINE(HAVE_SCR_DUMP)], AC_MSG_RESULT(no))
 
 AC_OUTPUT([Makefile pkgIndex.tcl])
