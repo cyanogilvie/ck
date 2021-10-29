@@ -5,19 +5,16 @@ if {"::tcltest" ni [namespace children]} {
     namespace import ::tcltest::*
 }
 
-puts stderr foo
 try {
 	package require ck
 } on error {errmsg options} {
 	puts stderr "Error loading ck: [dict get $options -errorinfo]"
 }
-puts stderr bar
 
 test ck-1.1 {Load ck} -body { #<<<
 } -result {}
 
 #>>>
-puts stderr baz
 
 
 # cleanup

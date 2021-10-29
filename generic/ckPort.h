@@ -43,15 +43,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <signal.h>
-#if defined(_WIN32) || defined(WIN32)
-#   include <limits.h>
-#else
-#   ifdef HAVE_LIMITS_H
-#      include <limits.h>
-#   else
-#      include "compat/limits.h"
-#   endif
-#endif
+#include <limits.h>
 #include <math.h>
 #if !defined(_WIN32) && !defined(WIN32)
 #   include <pwd.h>
