@@ -19,7 +19,7 @@ dnl	to configure the system for the local environment.
 # so that we create the export library with the dll.
 #-----------------------------------------------------------------------
 
-AC_INIT([ck], [8.6])
+AC_INIT([ck],[8.6])
 
 #--------------------------------------------------------------------
 # Call TEA_INIT as the first TEA_ macro to set up initial vars.
@@ -168,10 +168,8 @@ TEA_MAKE_LIB
 TEA_PROG_TCLSH
 #TEA_PROG_WISH
 
-AC_TRY_LINK([#include <ncurses.h>],
-	    [int c; initscr(); scr_dump("xx");],
-	    [AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAVE_SCR_DUMP)], AC_MSG_RESULT(no))
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <ncurses.h>]], [[int c; initscr(); scr_dump("xx");]])],[AC_MSG_RESULT(yes)
+	    AC_DEFINE(HAVE_SCR_DUMP)],[AC_MSG_RESULT(no)])
 
 #--------------------------------------------------------------------
 # Setup a *Config.sh.in configuration file.
@@ -194,4 +192,4 @@ AC_CONFIG_FILES([Makefile pkgIndex.tcl])
 # specified with AC_CONFIG_FILES.
 #--------------------------------------------------------------------
 
-AC_OUTPUT()
+AC_OUTPUT

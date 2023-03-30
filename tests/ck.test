@@ -5,6 +5,8 @@ if {"::tcltest" ni [namespace children]} {
     namespace import ::tcltest::*
 }
 
+tcltest::loadTestedCommands
+
 try {
 	package require ck
 } on error {errmsg options} {
